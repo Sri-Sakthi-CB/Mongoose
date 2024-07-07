@@ -2,7 +2,7 @@
 
 
 // Define a schema for a "user" collection
-const userSchema = new mongoose. Schema({ name: String });
+const userSchema = new mongoose.Schema({ name: String });
 
 
 // Create a model for the "user" collection using the schema
