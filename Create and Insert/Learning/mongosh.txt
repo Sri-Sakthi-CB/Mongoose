@@ -1,0 +1,411 @@
+Microsoft Windows [Version 10.0.22631.3737]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\SRI SAKTHI>mongodb
+'mongodb' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\SRI SAKTHI>mongosh
+Current Mongosh Log ID: 6689698fa290508097cc8987
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.10
+Using MongoDB:          7.0.12
+Using Mongosh:          2.2.10
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-07-06T14:13:59.814+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+admin   40.00 KiB
+config  72.00 KiB
+local   72.00 KiB
+test> db.getName()
+test
+test> const name = "Sri"
+
+test> const data = {"name" : "Sri", "age" : 19}
+
+test> data
+{ name: 'Sri', age: 19 }
+test> db.movies.insertOne({"name" : "Stranger Things", "ratings": 8})
+{
+  acknowledged: true,
+  insertedId: ObjectId('66896c3aa290508097cc8988')
+}
+test> show collections
+movies
+test> db.movies.insertOne.help()
+
+  db.collection.insertOne(document, options):
+
+  Inserts a document into a collection.
+
+  For more information on usage: https://docs.mongodb.com/manual/reference/method/db.collection.insertOne
+test> m1 = {"name": "Ok Kanmani", "ratings" : 9}
+{ name: 'Ok Kanmani', ratings: 9 }
+test> m2 = {"name" : "dev", "ratings" : 8}
+{ name: 'dev', ratings: 8 }
+test> m3 = {"name" : "Soorarai Potru", ratings: 9}
+{ name: 'Soorarai Potru', ratings: 9 }
+test> db.insertMany([m1, m2, m3])
+TypeError: db.insertMany is not a function
+test> db.movies.insertMany([m1, m2, m3])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('668980eba290508097cc8989'),
+    '1': ObjectId('668980eba290508097cc898a'),
+    '2': ObjectId('668980eba290508097cc898b')
+  }
+}
+test> db.movies.find()
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things',
+    ratings: 8
+  },
+  {
+    _id: ObjectId('668980eba290508097cc8989'),
+    name: 'Ok Kanmani',
+    ratings: 9
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898a'),
+    name: 'dev',
+    ratings: 8
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898b'),
+    name: 'Soorarai Potru',
+    ratings: 9
+  }
+]
+test> db.movies.find({"name" : "Ok Kanmani"})
+[
+  {
+    _id: ObjectId('668980eba290508097cc8989'),
+    name: 'Ok Kanmani',
+    ratings: 9
+  }
+]
+test> name
+Sri
+test> db.movies.find({ratings: 9})
+[
+  {
+    _id: ObjectId('668980eba290508097cc8989'),
+    name: 'Ok Kanmani',
+    ratings: 9
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898b'),
+    name: 'Soorarai Potru',
+    ratings: 9
+  }
+]
+test> db.movies.find({"name" : "Ok Kanmani", ratings: 8})
+
+test> db.movies.find({ratings: 8})
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things',
+    ratings: 8
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898a'),
+    name: 'dev',
+    ratings: 8
+  }
+]
+test> db.movies.find({ "name": "Ok kanmani"}, {name:1})
+
+test> db.movies.find({ "name": "Ok kanmani"}, {"name":1})
+
+test> db.movies.find({ "name": "Ok kanmani"}, {"name":1})
+
+test> db.movies.find({ "name": "Ok kanmani"}, {"name": 1 })
+
+test>  db.movies.find({}, {"name": 1})
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things'
+  },
+  { _id: ObjectId('668980eba290508097cc8989'), name: 'Ok Kanmani' },
+  { _id: ObjectId('668980eba290508097cc898a'), name: 'dev' },
+  { _id: ObjectId('668980eba290508097cc898b'), name: 'Soorarai Potru' }
+]
+test> db.movies.find({"name": "Ok Kanmani"}, {"name" : 1})
+[ { _id: ObjectId('668980eba290508097cc8989'), name: 'Ok Kanmani' } ]
+test> db.movies.find({"name": "Ok Kanmani"} , {"name" : 0})
+[ { _id: ObjectId('668980eba290508097cc8989'), ratings: 9 } ]
+test> db.movies.find().count()
+4
+test> db.movies.find().limit()
+MongoInvalidArgumentError: Operation "limit" requires an integer
+test> db.movies.find().limit(2)
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things',
+    ratings: 8
+  },
+  {
+    _id: ObjectId('668980eba290508097cc8989'),
+    name: 'Ok Kanmani',
+    ratings: 9
+  }
+]
+test> db.movies.find({}, {"name":1}).sort({"name":1})
+[
+  { _id: ObjectId('668980eba290508097cc8989'), name: 'Ok Kanmani' },
+  { _id: ObjectId('668980eba290508097cc898b'), name: 'Soorarai Potru' },
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things'
+  },
+  { _id: ObjectId('668980eba290508097cc898a'), name: 'dev' }
+]
+test> db.movies.find({}, {"name":1}).sort({"name":-1})
+[
+  { _id: ObjectId('668980eba290508097cc898a'), name: 'dev' },
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things'
+  },
+  { _id: ObjectId('668980eba290508097cc898b'), name: 'Soorarai Potru' },
+  { _id: ObjectId('668980eba290508097cc8989'), name: 'Ok Kanmani' }
+]
+test> db.movies.find({}, {"name":1}).sort({"name":-1}).skip(1)
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things'
+  },
+  { _id: ObjectId('668980eba290508097cc898b'), name: 'Soorarai Potru' },
+  { _id: ObjectId('668980eba290508097cc8989'), name: 'Ok Kanmani' }
+]
+test> db.movies.find({ratings: {$lt: 9})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:33)
+
+> 1 | db.movies.find({ratings: {$lt: 9})
+    |                                  ^
+  2 |
+
+test> db.movies.find({ratings: {$lt:9}})
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things',
+    ratings: 8
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898a'),
+    name: 'dev',
+    ratings: 8
+  }
+]
+test> db.movies.find({ratings: {$gt: 5}})
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things',
+    ratings: 8
+  },
+  {
+    _id: ObjectId('668980eba290508097cc8989'),
+    name: 'Ok Kanmani',
+    ratings: 9
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898a'),
+    name: 'dev',
+    ratings: 8
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898b'),
+    name: 'Soorarai Potru',
+    ratings: 9
+  }
+]
+test> db.movies.UpdateOne({"name": "dev"}, {$set: {ratings: 7}})
+TypeError: db.movies.UpdateOne is not a function
+test> db.movies.updateOne({"name" : "dev"}, {$set: {ratings: 7}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+test> db.movies.updateMany({ratings:8}, { $set: {ratings: 10}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+test> db.movies.insertOne({"name":"Random", ratings:6})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6689e340a290508097cc898c')
+}
+test> db.movies.find()
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things',
+    ratings: 10
+  },
+  {
+    _id: ObjectId('668980eba290508097cc8989'),
+    name: 'Ok Kanmani',
+    ratings: 9
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898a'),
+    name: 'dev',
+    ratings: 7
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898b'),
+    name: 'Soorarai Potru',
+    ratings: 9
+  },
+  {
+    _id: ObjectId('6689e340a290508097cc898c'),
+    name: 'Random',
+    ratings: 6
+  }
+]
+test> db.movies.delete({"name": "Random"})
+TypeError: db.movies.delete is not a function
+test> db.movies.deleteOne({"name" : "Random"})
+{ acknowledged: true, deletedCount: 1 }
+test> db.movies.insertOne({"name":"Equalizer", ratings: 5})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6689e3cfa290508097cc898d')
+}
+test> db.movies.insertOne({"name":"Avengers", ratings:5})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6689e3fba290508097cc898e')
+}
+test> db.movies.find()
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things',
+    ratings: 10
+  },
+  {
+    _id: ObjectId('668980eba290508097cc8989'),
+    name: 'Ok Kanmani',
+    ratings: 9
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898a'),
+    name: 'dev',
+    ratings: 7
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898b'),
+    name: 'Soorarai Potru',
+    ratings: 9
+  },
+  {
+    _id: ObjectId('6689e3cfa290508097cc898d'),
+    name: 'Equalizer',
+    ratings: 5
+  },
+  {
+    _id: ObjectId('6689e3fba290508097cc898e'),
+    name: 'Avengers',
+    ratings: 5
+  }
+]
+test> db.movies.deleteMany({ratings: 5})
+{ acknowledged: true, deletedCount: 2 }
+test> db.movies.find()
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things',
+    ratings: 10
+  },
+  {
+    _id: ObjectId('668980eba290508097cc8989'),
+    name: 'Ok Kanmani',
+    ratings: 9
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898a'),
+    name: 'dev',
+    ratings: 7
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898b'),
+    name: 'Soorarai Potru',
+    ratings: 9
+  }
+]
+test> db.movies.find()
+[
+  {
+    _id: ObjectId('66896c3aa290508097cc8988'),
+    name: 'Stranger Things',
+    ratings: 10
+  },
+  {
+    _id: ObjectId('668980eba290508097cc8989'),
+    name: 'Ok Kanmani',
+    ratings: 9
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898a'),
+    name: 'dev',
+    ratings: 7
+  },
+  {
+    _id: ObjectId('668980eba290508097cc898b'),
+    name: 'Soorarai Potru',
+    ratings: 9
+  }
+]
+test> const m = db.movies.find(m)
+
+test> const result = db.movies.find().toArray()
+
+test> console.table(result)
+┌─────────┬──────────────────────────────────────┬───────────────────┬─────────┐
+│ (index) │ _id                                  │ name              │ ratings │
+├─────────┼──────────────────────────────────────┼───────────────────┼─────────┤
+│ 0       │ ObjectId('66896c3aa290508097cc8988') │ 'Stranger Things' │ 10      │
+│ 1       │ ObjectId('668980eba290508097cc8989') │ 'Ok Kanmani'      │ 9       │
+│ 2       │ ObjectId('668980eba290508097cc898a') │ 'dev'             │ 7       │
+│ 3       │ ObjectId('668980eba290508097cc898b') │ 'Soorarai Potru'  │ 9       │
+└─────────┴──────────────────────────────────────┴───────────────────┴─────────┘
+
+test> const tab = db.movies.find().toArray()
+
+test> console.table(tab)
+┌─────────┬──────────────────────────────────────┬───────────────────┬─────────┐
+│ (index) │ _id                                  │ name              │ ratings │
+├─────────┼──────────────────────────────────────┼───────────────────┼─────────┤
+│ 0       │ ObjectId('66896c3aa290508097cc8988') │ 'Stranger Things' │ 10      │
+│ 1       │ ObjectId('668980eba290508097cc8989') │ 'Ok Kanmani'      │ 9       │
+│ 2       │ ObjectId('668980eba290508097cc898a') │ 'dev'             │ 7       │
+│ 3       │ ObjectId('668980eba290508097cc898b') │ 'Soorarai Potru'  │ 9       │
+└─────────┴──────────────────────────────────────┴───────────────────┴─────────┘
+
+test>
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+test>
