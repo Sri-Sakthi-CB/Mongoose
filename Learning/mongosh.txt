@@ -1,9 +1,6 @@
 Microsoft Windows [Version 10.0.22631.3737]
 (c) Microsoft Corporation. All rights reserved.
 
-C:\Users\SRI SAKTHI>mongodb
-'mongodb' is not recognized as an internal or external command,
-operable program or batch file.
 
 C:\Users\SRI SAKTHI>mongosh
 Current Mongosh Log ID: 6689698fa290508097cc8987
